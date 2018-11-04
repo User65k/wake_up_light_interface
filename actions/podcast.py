@@ -47,6 +47,14 @@ class nwThread(Thread):
             logging.info(mp3uri)
             playViaDLNA(DLNA_DEVICE, mp3uri, 20)
 
+def prerun(args):
+    """
+    Args: see main
+
+    return: minutes to trigger this action before the alarm rings
+    """
+    return 0
+
 def main(url):
     """
     Args: url

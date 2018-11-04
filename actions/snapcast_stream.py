@@ -48,6 +48,14 @@ class nwThread(Thread):
 
         switch_stream(stream_id, duration)
 
+def prerun(args):
+    """
+    Args: see main
+
+    return: minutes to trigger this action before the alarm rings
+    """
+    return 0
+
 def main(args):
     """
     Args: StreamID[ Duration]

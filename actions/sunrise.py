@@ -21,26 +21,30 @@ def set_lamp(brightness, redval):
     except Exception:
         logging.exception("send error")
 
+def parse_args(args):
+    l = args.find(" ")
+    shine = args
+    cool = args
+    if l!=-1:
+        cool = args[l+1:]
+        shine = args[:l]
+    
+    shine = int(shine)
+    cool = int(cool)
+    return (shine, cool)
+
 class dimThread(Thread):
     def __init__(self, args):
         Thread.__init__(self)
         self.args = args
 
     def run(self):
-        l = self.args.find(" ")
-        shine = self.args
-        cool = self.args
-        if l!=-1:
-            cool = self.args[l+1:]
-            shine = self.args[:l]
-        
-        shine = int(shine)
-        cool = int(cool)
+        shine, cool = parse_args(self.args)
 
         set_lamp(1,15)
 
         #brigten every min
-        for l in range(2,15):
+        for l in range(1,15):
             sleep(shine)
             set_lamp(l,15)
 
@@ -48,6 +52,17 @@ class dimThread(Thread):
         for r in range(1,15):
             sleep(cool)
             set_lamp(15,15-r)
+
+def prerun(args):
+    """
+    Args: see main
+
+    return: minutes to trigger this action before the alarm rings
+    """
+    shine, cool = parse_args(args)
+    #lamp should be brigt at alarm time, so brigten should happen before
+    #shine is in seconds and there are 15 steps
+    return ((shine * 15)+1)/60
 
 def main(args):
     """
