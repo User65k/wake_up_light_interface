@@ -34,7 +34,7 @@ for alarm in alarms:
         action = alarm["action"]
         print("running action ", action)
 
-        m = match("([a-zA-Z]+) ?(.*)?", action)
+        m = match("([a-zA-Z_-]+) ?(.*)?", action)
         if m:
             spec = spec_from_file_location("actions."+m.group(1),"%sactions/%s.py"%(working_dir, m.group(1)))
             mod = module_from_spec(spec)
